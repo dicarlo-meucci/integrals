@@ -1,0 +1,4 @@
+# Indent with 4 spaces
+tab_spaces = 4
+# Maximum width of the line
+max_width = 100

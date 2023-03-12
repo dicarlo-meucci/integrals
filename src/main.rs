@@ -1,13 +1,5 @@
-use meval::eval_str;
 mod io;
-
-fn format_function(x: &str, y: f64) -> String {
-    x.replace("x", &y.to_string())
-}
-
-fn f(function_to_eval: &String) -> f64 {
-    eval_str(function_to_eval).unwrap()
-}
+mod math;
 
 fn main() {
     let mut input_function = String::new();
@@ -24,15 +16,16 @@ fn main() {
     print!("\x1B[2J\x1B[1;1H");
 
     io::pretty_print_integral(&input_function, start_value, stop_value);
-
+    io::print_graph(&input_function);
+    
     let steps = (stop_value - start_value) / accuracy;
     let mut index = 0.0;
     let mut area = 0.0;
 
     while index <= steps {
-        let input_fn_copy = format_function(&input_function, start_value + index * accuracy);
+        let input_fn_copy = math::format_function(&input_function, start_value + index * accuracy);
 
-        area = area + accuracy * f(&input_fn_copy);
+        area = area + accuracy * math::f(&input_fn_copy);
         index += 1.0;
     }
 
