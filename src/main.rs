@@ -1,5 +1,6 @@
 mod io;
 mod math;
+mod tests;
 
 fn main() {
     let mut input_function = String::new();

@@ -1,5 +1,5 @@
 use crate::math;
-use std::io::{Write, self};
+use std::io::{Write};
 use textplots::{Chart, Plot, Shape};
 
 pub fn get_string(message: &str, buffer: &mut String) {
