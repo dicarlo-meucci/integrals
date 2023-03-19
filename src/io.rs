@@ -41,14 +41,14 @@ pub fn pretty_print_integral(function: &String, start_value: f64, stop_value: f6
 
 pub fn pretty_print_result(result: f64) {
     println!("──────────────────────── RESULT ────────────────────────");
-    println!("                         {:.2}", result);
+    println!("                         {:.5}", result);
     println!("────────────────────────────────────────────────────────");
 }
 
 pub fn print_graph(function: &String) {
     let eval_function = move |x: f32| math::f(&math::format_function(function, x as f64)) as f32;
     println!("───────────────────────── GRAPH ────────────────────────");
-    Chart::new(100,100,-1.0,1.0)
+    Chart::default()
         .lineplot(&Shape::Continuous(Box::new(eval_function)))
         .display();
 }

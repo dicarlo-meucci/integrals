@@ -25,7 +25,7 @@ fn main() {
 
     while index <= steps {
         let input_fn_copy = math::format_function(&input_function, start_value + index * accuracy);
-
+        
         area = area + accuracy * math::f(&input_fn_copy);
         index += 1.0;
     }

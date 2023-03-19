@@ -26,8 +26,8 @@ mod tests {
             index += 1.0;
         }
         
-        let area = format!("{:.2}", area).parse::<f64>().unwrap();
+        let area = format!("{:.5}", area).parse::<f64>().unwrap();
         
-        assert_eq!(area, 0.25);
+        assert_eq!(area, 0.25050);
     }
 }
