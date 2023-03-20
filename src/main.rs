@@ -13,8 +13,8 @@ fn main() {
     io::get_number("a = ", &mut start_value);
     io::get_number("b = ", &mut stop_value);
     io::get_number("accuracy = ", &mut accuracy);
-
-    print!("\x1B[2J\x1B[1;1H");
+    
+    io::clear_console();
 
     io::pretty_print_integral(&input_function, start_value, stop_value);
     io::print_graph(&input_function);

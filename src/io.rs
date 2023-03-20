@@ -1,5 +1,6 @@
 use crate::math;
 use std::io::{Write};
+use std::env;
 use textplots::{Chart, Plot, Shape};
 
 pub fn get_string(message: &str, buffer: &mut String) {
@@ -30,6 +31,10 @@ pub fn get_number(message: &str, buffer: &mut f64) {
             }
         }
     }
+}
+
+pub fn clear_console() {
+    print!("\x1Bc")
 }
 
 pub fn pretty_print_integral(function: &String, start_value: f64, stop_value: f64) {
