@@ -1,33 +1,44 @@
 #[cfg(test)]
 mod tests {
     use crate::math;
-    
+    use assert_approx_eq::assert_approx_eq;
+
     #[test]
-    fn math_format_function() {
-        let input_function = String::from("x^2 + 2*x + 1");
-        let x_value = 2.0;
-        let formatted_function = math::format_function(&input_function, x_value);
-        assert_eq!(formatted_function, String::from("2^2 + 2*2 + 1"));
+    fn math_function_evaluation() {
+        let input_function = String::from("x^3");
+        let x = 3.0;
+        assert_eq!(math::f(&input_function, x), 27.0);
     }
 
     #[test]
-    fn integration_algorithm() {
+    fn math_rectangles_integration() {
         let input_function = String::from("x^3");
         let start_value = 0.0;
         let stop_value = 1.0;
         let accuracy = 0.001;
+        let result =
+            math::rectangles_integration(&input_function, start_value, stop_value, accuracy);
+        assert_approx_eq!(result, 0.250, 1e-3);
+    }
 
-        let mut index = 0.0;
-        let mut area = 0.0;
+    #[test]
+    fn math_trapezoid_integration() {
+        let input_function = String::from("x^3");
+        let start_value = 0.0;
+        let stop_value = 1.0;
+        let accuracy = 0.001;
+        let result =
+            math::trapezoid_integration(&input_function, start_value, stop_value, accuracy);
+        assert_approx_eq!(result, 0.250, 1e-3);
+    }
 
-        while index <= (stop_value - start_value) / accuracy {
-            let input_fn_copy = math::format_function(&input_function, start_value + index * accuracy);
-            area = area + accuracy * math::f(&input_fn_copy);
-            index += 1.0;
-        }
-        
-        let area = format!("{:.5}", area).parse::<f64>().unwrap();
-        
-        assert_eq!(area, 0.25050);
+    #[test]
+    fn math_parabola_integration() {
+        let input_function = String::from("x^3");
+        let start_value = 0.0;
+        let stop_value = 1.0;
+        let accuracy = 0.001;
+        let result = math::parabola_integration(&input_function, start_value, stop_value, accuracy);
+        assert_approx_eq!(result, 0.250, 1e-3);
     }
 }
