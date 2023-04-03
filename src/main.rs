@@ -31,37 +31,46 @@ struct Config {
 }
 
 fn main() {
-    let config = Config::parse();
+    let mut config = Config::parse();
 
     println!("{:?}", config);
 
-    let mut input_function = config.function.unwrap_or(String::new());
-    let mut upper_limit: f64 = config.upper.unwrap_or(f64::default());
-    let mut lower_limit: f64 = config.lower.unwrap_or(f64::default());
-    let mut precision: f64 = config.precision.unwrap_or(f64::default());
-    let mut algorithm: Option<Algorithm> =
-        validate_algo(config.algorithm.unwrap_or(i32::default()));
+    let mut input_function = String::new();
+    let mut upper_limit: f64 = 0.0;
+    let mut lower_limit: f64 = 0.0;
+    let mut precision: f64 = 0.0;
+    let algorithm: Option<Algorithm>;
     let decimals: usize = config.decimals.unwrap_or(6);
 
     io::print_header();
-    if config.algorithm.is_none() {
+    if config.function.is_none() {
         io::get_string("f(x) = ", &mut input_function);
+    } else {
+        input_function = config.function.take().unwrap();
     }
 
     if config.lower.is_none() {
         io::get_number("a = ", &mut lower_limit);
+    } else {
+        upper_limit = config.upper.unwrap();
     }
 
     if config.upper.is_none() {
         io::get_number("b = ", &mut upper_limit);
+    } else {
+        lower_limit = config.lower.unwrap();
     }
 
     if config.precision.is_none() {
         io::get_number("precision = ", &mut precision);
+    } else {
+        precision = config.precision.unwrap();
     }
 
     if config.algorithm.is_none() {
         algorithm = io::get_algo()
+    } else {
+        algorithm = validate_algo(config.algorithm.unwrap());
     }
 
     io::clear_console();
