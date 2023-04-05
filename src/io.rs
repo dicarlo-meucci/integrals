@@ -1,5 +1,5 @@
 use crate::{math, Algorithm};
-use std::io::Write;
+use std::{io::Write, time::Duration};
 use textplots::{Chart, Plot, Shape};
 
 pub fn get_string(message: &str, buffer: &mut String) {
@@ -37,6 +37,9 @@ pub fn validate_algo(algo: i32) -> Option<Algorithm> {
         1 => Some(Algorithm::Rectangles),
         2 => Some(Algorithm::Trapezoids),
         3 => Some(Algorithm::Parabolas),
+        4 => Some(Algorithm::MultithreadedRectangles),
+        5 => Some(Algorithm::MultithreadedTrapezoids),
+        6 => Some(Algorithm::MultithreadedParabolas),
         _ => None,
     }
 }
@@ -47,6 +50,9 @@ pub fn get_algo() -> Option<Algorithm> {
         println!("[1] Rectangles (traditional)");
         println!("[2] Trapezoids (more accurate)");
         println!("[3] Parabolas (best)");
+        println!("[4] Multithreaded Rectangles");
+        println!("[5] Multithreaded Trapezoids");
+        println!("[6] Multithreaded Parabolas");
         print!("algorithm = ");
         std::io::stdout().flush().unwrap();
 
@@ -56,11 +62,14 @@ pub fn get_algo() -> Option<Algorithm> {
             .expect("Invalid input");
 
         if let Ok(choice) = input.trim().parse() {
-            if (1..=3).contains(&choice) {
+            if (1..=6).contains(&choice) {
                 return match choice {
                     1 => Some(Algorithm::Rectangles),
                     2 => Some(Algorithm::Trapezoids),
                     3 => Some(Algorithm::Parabolas),
+                    4 => Some(Algorithm::MultithreadedRectangles),
+                    5 => Some(Algorithm::MultithreadedTrapezoids),
+                    6 => Some(Algorithm::MultithreadedParabolas),
                     _ => panic!("Invalid algorithm"),
                 };
             }
@@ -84,21 +93,24 @@ pub fn print_header() {
 }
 
 pub fn pretty_print_integral(function: &String, start_value: f64, stop_value: f64) {
-    println!("──────────────────────── COMPUTING ────────────────────────");
-    println!("                         {}", stop_value);
-    println!("                        ∫ {} dx", function);
-    println!("                         {}", start_value);
+    println!("──────────────────────── COMPUTING ────────────────────────\n");
+    println!("{:^56}", stop_value);
+    println!("{:^60}", format!("∫ {} dx", function));
+    println!("{:^56}", start_value);
+    println!();
 }
 
 pub fn print_algorithm(algorithm: &Option<Algorithm>) {
-    println!("──────────────────────── ALGORITHM ────────────────────────");
-    println!();
+    println!("──────────────────────── ALGORITHM ────────────────────────\n");
     println!(
-        "                         {}",
+        "{:^60}",
         match algorithm {
             Some(Algorithm::Rectangles) => "Rectangles",
             Some(Algorithm::Trapezoids) => "Trapezoids",
             Some(Algorithm::Parabolas) => "Parabolas",
+            Some(Algorithm::MultithreadedRectangles) => "Rectangles (Multithreaded)",
+            Some(Algorithm::MultithreadedTrapezoids) => "Trapezoids (Multithreaded)",
+            Some(Algorithm::MultithreadedParabolas) => "Parabolas (Multithreaded)",
             None => "Unknown",
         }
     );
@@ -115,6 +127,15 @@ pub fn print_graph(function: &String) {
 
 pub fn pretty_print_result(result: f64, decimals: usize) {
     println!("───────────────────────── RESULT ─────────────────────────");
-    println!("                         {:.decimals$}", result);
+    println!(
+        "{:^58}",
+        format!("{:.decimals$}", result, decimals = decimals)
+    );
+    println!("──────────────────────────────────────────────────────────");
+}
+
+pub fn pretty_print_time_elapsed(duration: Duration) {
+    println!("────────────────────────── TIME ──────────────────────────");
+    println!("{:^60}", format!("{:?}", duration));
     println!("──────────────────────────────────────────────────────────");
 }
