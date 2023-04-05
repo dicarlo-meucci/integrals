@@ -1,7 +1,7 @@
 # Integrals
 
 ## Descrizione
-Questo software permette di calcolare con una certa precisione il valore dell'area sottostante una curva, espressa da una funzione f(x) negli intervalli specificati <strong>a</strong> e <strong>b</strong>. Tutti questi parametri sono inseriti dall'utente, che potrà visualizzare il risultato approssimativo sullo schermo del terminale
+Questo software permette di calcolare con una certa precisione il valore dell'area sottostante una curva, espressa da una funzione f(x) nell'intervallo specificato dagli estremi <strong>a</strong> e <strong>b</strong>. Tutti questi parametri sono inseriti dall'utente, che potrà visualizzare il risultato approssimativo sullo schermo del terminale. Il programma dispone di 3 algoritmi: Rettangoli (Riemann), Trapezi e Parabole (Simpson). Inoltre è possibile utilizzare le versioni multithread che permettono un'esecuzione nettamente piu veloce.
 
 ## Istruzioni
 All'avvio del programma, esso chiederà all'utente i valori da inserire.
@@ -15,6 +15,8 @@ All'avvio del programma, esso chiederà all'utente i valori da inserire.
 | algorithm | l'algoritmo da utilizzare           | 1
 
 [⚠️] Il parametro precision, incide molto sulla velocità di esecuzione del programma. Molto spesso sono sufficienti 3 cifre decimali, e sono un buon compromesso tra velocità di esecuzione e precisione del risultato.
+
+[⚠️] Gli algoritmi multithreaded tendono ad essere nettamente più veloci, per calcoli che richiedono molte iterazioni. Se è necessaria un'alta precisione è consigliato utilizzarli.
 
 L'output del programma permetterà di visualizzare l'integrale inserito dall'utente, un grafico che rappresenta la curva della funzione ed infine il risultato dell'operazione.
 
@@ -41,12 +43,14 @@ Options:
 
 ```
 ──────────────────────── COMPUTING ────────────────────────
-                         1
-                        ∫ x^3 dx
-                         0
+
+                           1                            
+                          ∫ x^3 dx                          
+                           0                            
+
 ──────────────────────── ALGORITHM ────────────────────────
 
-                         Rectangles
+                         Rectangles                         
 
 ─────────────────────────── GRAPH ──────────────────────────
                               ⡁                           ⢠⠊  950.8
@@ -68,7 +72,10 @@ Options:
 -10.0                                                    10.0
 
 ───────────────────────── RESULT ─────────────────────────
-                         0.2505002500
+                       0.2495002500                       
+──────────────────────────────────────────────────────────
+────────────────────────── TIME ──────────────────────────
+                         26.32741ms                         
 ──────────────────────────────────────────────────────────
 
 ```
@@ -89,6 +96,3 @@ test tests::tests::math_parabola_integration ... ok
 
 test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
 ```
-
-## Funzionalità pianificate
-- Esecuzione parallela (multithread)

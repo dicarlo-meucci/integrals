@@ -9,5 +9,6 @@ edition = "2021"
 assert_approx_eq = "1.1.0"
 clap = { version = "4.1.11", features = ["derive"] }
 meval = "0.2.0"
+num_cpus = "1.15.0"
 rayon = "1.7.0"
 textplots = "0.8.0"

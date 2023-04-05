@@ -259,6 +259,7 @@ dependencies = [
  "assert_approx_eq",
  "clap 4.1.11",
  "meval",
+ "num_cpus",
  "rayon",
  "textplots",
 ]

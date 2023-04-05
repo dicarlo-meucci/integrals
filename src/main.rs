@@ -1,6 +1,7 @@
 use crate::io::validate_algo;
 use clap::Parser;
 use core::panic;
+use std::time::Instant;
 mod io;
 mod math;
 mod tests;
@@ -9,9 +10,9 @@ pub enum Algorithm {
     Rectangles,
     Trapezoids,
     Parabolas,
-    //MultithreadedRectangles,
-    //MultithreadedTrapezoids,
-    //MultithreadedParabolas
+    MultithreadedRectangles,
+    MultithreadedTrapezoids,
+    MultithreadedParabolas,
 }
 
 #[derive(Parser, Default, Debug)]
@@ -79,6 +80,8 @@ fn main() {
     io::print_algorithm(&algorithm);
     io::print_graph(&input_function);
 
+    let start_calculation = Instant::now();
+
     let result = match algorithm {
         Some(Algorithm::Rectangles) => {
             math::rectangles_integration(&input_function, lower_limit, upper_limit, precision)
@@ -89,10 +92,35 @@ fn main() {
         Some(Algorithm::Parabolas) => {
             math::parabola_integration(&input_function, lower_limit, upper_limit, precision)
         }
+        Some(Algorithm::MultithreadedRectangles) => math::multithreaded_rectangles_integration(
+            &input_function,
+            lower_limit,
+            upper_limit,
+            precision,
+        ),
+        Some(Algorithm::MultithreadedTrapezoids) => {
+            math::multithreaded_trapezoid_integration(
+                &input_function,
+                lower_limit,
+                upper_limit,
+                precision,
+            )
+        },
+        Some(Algorithm::MultithreadedParabolas) => {
+            math::multithreaded_parabola_integration(
+                &input_function,
+                lower_limit,
+                upper_limit,
+                precision,
+            )
+        },
         None => {
             panic!("Invalid algorithm");
         }
     };
 
+    let elapsed = start_calculation.elapsed();
+
     io::pretty_print_result(result, decimals);
+    io::pretty_print_time_elapsed(elapsed)
 }
